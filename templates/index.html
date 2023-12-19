@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% block head %}
+    <style>
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(16, 1fr);
+            grid-template-rows: repeat(16, 1fr);
+            width: 500px;
+            height: 500px;
+            
+            
+        }
+
+        .space{
+            margin-top: 1em;
+        }
+
+        .cell {
+            border: 1px solid black;
+            background-color: white;
+        }
+
+        img { 
+            image-rendering: optimizeSpeed;             /* STOP SMOOTHING, GIVE ME SPEED  */
+            image-rendering: -moz-crisp-edges;          /* Firefox                        */
+            image-rendering: -o-crisp-edges;            /* Opera                          */
+            image-rendering: -webkit-optimize-contrast; /* Chrome (and eventually Safari) */
+            image-rendering: pixelated;                 /* Universal support since 2021   */
+            image-rendering: optimize-contrast;         /* CSS3 Proposed                  */
+            -ms-interpolation-mode: nearest-neighbor;   /* IE8+                           */
+
+        }
+    </style>
+{% endblock %}
+
+
+{% block content %}
+        <div class="row">
+            <div class="col-6">
+                <div id="grid" class="grid" draggable="false"></div> 
+            </div>
+            <div class="col-6">
+                <img id="GeneratedImage" src="" width="512px" height="512px" alt="Generated Image" draggable="false">
+            </div>
+            <div class="col-12 space">
+                <input type="color" name="color" id="color">
+                <label style="margin: 0.4rem;" for="head">Color</label>
+            </div>
+            <hr>
+            <div class="col-12 space">
+                <label for="StepsRange" id="StepsText" class="form-label">Steps: 1</label>
+                <input type="range" value="1" class="form-range" min="1" max="10" step="1" id="StepsRange">
+            </div>
+            <div class="col-12 space">
+                <label for="NoiseRange" id="NoiseText" class="form-label">Noise: 0</label>
+                <input type="range" value="0" class="form-range" min="0" max="1" step="0.01" id="NoiseRange">
+            </div>
+            <div class="col-12 space">
+                <label for="ContrastRange" id="ContrastText" class="form-label">Contrast: 0</label>
+                <input type="range" value="0" class="form-range" min="-1" max="1" step="0.01" id="ContrastRange">
+            </div>
+            <div class="col-12 space">
+                
+                <button onclick="generate()" class="btn btn-primary">Generate</button>
+                <button style="margin-left: 1em" onclick="clearCanvas()" class="btn btn-primary">Clear</button>
+            </div>
+        </div>
+        <script src="/js/engine.js"></script>
+    {% endblock %}
